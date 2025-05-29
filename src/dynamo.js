@@ -1,5 +1,5 @@
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import { DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb";
+import { DynamoDBDocumentClient, UpdateCommand } from "@aws-sdk/lib-dynamodb";
 const TABLE = "animals";
 
 const client = new DynamoDBClient({
@@ -39,12 +39,31 @@ export async function deleteAnimal(id) {
   );
 }
 
+export async function updateAnimalImage(id, imageUrl) {
+  await docClient.send(
+    new UpdateCommand({
+      TableName: TABLE,
+      Key: { id },
+      UpdateExpression: "set imageUrl = :imageUrl",
+      ExpressionAttributeNames: {
+        "#imageUrl": "imageUrl",
+      },
+      ExpressionAttributeValues: {
+        ":imageUrl": imageUrl,
+      },
+    })
+  );
+}
+
 export async function toggleAdopted(id, adopted) {
   await docClient.send(
     new UpdateCommand({
       TableName: TABLE,
       Key: { id },
       UpdateExpression: "set adopted = :adopted",
+      ExpressionAttributeNames: {
+        "#adopted": "adopted",
+      },
       ExpressionAttributeValues: {
         ":adopted": adopted,
       },

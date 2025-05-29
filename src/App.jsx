@@ -6,7 +6,7 @@ import Animals from "./components/Animals";
 import { useEffect } from "react";
 import { createAnimal, deleteAnimal, scanAnimals } from "./api/animals";
 
-import { useState as useStateHook } from "react";
+import { toggleAdopted, updateAnimalImage } from "./api/animals";
 import { useState } from "react";
 
 function App() {
@@ -48,6 +48,16 @@ function App() {
     setAnimals((prev) => prev.filter((animal) => animal.id !== id));
   }
 
+  async function handleEditImage(animal) {
+    const imageUrl = window.prompt("Enter new image URL:", animal.imageUrl);
+    if (!imageUrl) return;
+
+    await updateAnimalImage(animal.id, imageUrl);
+    setAnimals((prev) =>
+      prev.map((a) => (a.id === animal.id ? { ...a, imageUrl } : a))
+    );
+  }
+
   async function handleAdd() {
     if (!form.name || !form.species || !form.age) return;
     const item = {
@@ -66,24 +76,41 @@ function App() {
     setShow(false);
   }
 
+  const available = animals.filter((animal) => !animal.adopted);
+  const adopted = animals.filter((animal) => animal.adopted);
+
   return (
     <>
       <h1>Fur-Ever Friends Rescue</h1>
-      <Button variant="primary" onClick={() => setShow(true)}>
-        Add Animal
-      </Button>
-      <AnimalModal
-        show={show}
-        onHide={() => setShow(false)}
-        form={form}
-        onChange={handleChange}
-        onSave={handleSave}
-      />
-      <Animals
-        animals={animals}
-        title="Ready For Adoption!"
-        deleteAnimal={deleteAnimal}
-      />
+      <main className="container">
+        <Button variant="primary" onClick={() => setShow(true)}>
+          Add Animal
+        </Button>
+
+        <AnimalModal
+          show={show}
+          onHide={() => setShow(false)}
+          form={form}
+          onChange={handleChange}
+          onSave={handleAdd}
+        />
+        <Animals
+          animals={adopted}
+          title="these animals have found a home!"
+          deleteAnimal={deleteAnimal}
+          toggleAdopted={handleToggle}
+          onEditImage={handleEditImage}
+          onChange={handleChange}
+        />
+        <Animals
+          animals={available}
+          title="Ready For Adoption!"
+          deleteAnimal={deleteAnimal}
+          toggleAdopted={handleToggle}
+          onEditImage={handleEditImage}
+          onChange={handleChange}
+        />
+      </main>
     </>
   );
 }

@@ -14,3 +14,6 @@ If you are developing a production application, we recommend using TypeScript wi
 npm i @aws-sdk/client-dynamodb @aws-sdk/lib-dynamodb
 
 ![alt text](image.png)
+
+
+![alt text](image-1.png)

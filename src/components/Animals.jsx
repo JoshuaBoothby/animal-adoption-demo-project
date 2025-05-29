@@ -8,9 +8,8 @@ export default function Animals({
   deleteAnimal,
   toggleAdopted,
 }) {
-  if (animals.length == 0) return <h2> All Pets have found a home!</h2>;
-
-  // TODO Add button to edit image
+  // TODO add a check to see if animals is empty and return a message
+  if (animals.length == 0) return <h2>No Animals</h2>;
 
   return (
     <div>
@@ -26,6 +25,14 @@ export default function Animals({
               fluid
               width={100}
             />
+            <Button
+              size="sm"
+              className="me-2"
+              variant="light"
+              onClick={() => onEditImage(animal)}
+            >
+              Edit
+            </Button>
             <div>
               <strong>{animal.name}</strong> - {animal.species} ({animal.age}{" "}
               years old)
