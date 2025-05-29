@@ -2,11 +2,15 @@ import React from "react";
 import { ListGroup } from "react-bootstrap";
 import Image from "react-bootstrap/Image";
 
-export default function Animals({ animals }) {
+export default function Animals({
+  animals,
+  title,
+  deleteAnimal,
+  toggleAdopted,
+}) {
   if (animals.length == 0) return <h2> All Pets have found a home!</h2>;
 
   // TODO Add button to edit image
-  // TODO Add button to make unavailable of available
 
   return (
     <div>
@@ -34,6 +38,23 @@ export default function Animals({ animals }) {
               {animal.vaccinated && "Vaccinated"}
               {!animal.vaccinated && "Not Vaccinated"}
             </div>
+            <Button
+              size="sm"
+              className="me-2"
+              variant="primary"
+              disabled={animal.adopted}
+              onClick={() => toggleAdopted(animal.id, !animal.adopted)}
+            >
+              {animal.adopted && "Make Available"}
+              {!animal.adopted && "Adopt"}
+            </Button>
+            <Button
+              variant="danger"
+              size="sm"
+              onClick={() => deleteAnimal(animal.id)}
+            >
+              Delete
+            </Button>
           </ListGroup.Item>
         ))}
       </ListGroup>

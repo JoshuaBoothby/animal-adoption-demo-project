@@ -2,6 +2,12 @@ import React, { useState } from "react";
 import "./App.css";
 import AnimalModal from "./components/AnimalModal";
 import { Button } from "react-bootstrap";
+import Animals from "./components/Animals";
+import { useEffect } from "react";
+import { createAnimal, deleteAnimal, scanAnimals } from "./api/animals";
+
+import { useState as useStateHook } from "react";
+import { useState } from "react";
 
 function App() {
   const { form, setForm } = useState({
@@ -14,7 +20,6 @@ function App() {
   });
 
   const { animals, setAnimals } = useState([]);
-
   const { show, setShow } = useState(false);
 
   useEffect(() => {
@@ -31,6 +36,18 @@ function App() {
     });
   }
 
+  async function handleToggle(animal) {
+    await toggleAdopted(animal.id, !animal.adopted);
+    setAnimals((prev) =>
+      prev.map((a) => (a.id === animal.id ? { ...a, adopted: !a.adopted } : a))
+    );
+  }
+
+  async function deleteAnimal(id) {
+    await deleteAnimal(id);
+    setAnimals((prev) => prev.filter((animal) => animal.id !== id));
+  }
+
   async function handleAdd() {
     if (!form.name || !form.species || !form.age) return;
     const item = {
@@ -40,6 +57,7 @@ function App() {
       kidFriendly: form.kidFriendly,
       vaccinated: form.vaccinated,
       age: form.age,
+      adopted: false,
       imageUrl: form.imageUrl || "https://placebear.com/300/400",
     };
 
@@ -61,7 +79,11 @@ function App() {
         onChange={handleChange}
         onSave={handleSave}
       />
-      <Animals animals={animals} title="Ready For Adoption!" />
+      <Animals
+        animals={animals}
+        title="Ready For Adoption!"
+        deleteAnimal={deleteAnimal}
+      />
     </>
   );
 }

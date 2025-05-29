@@ -29,3 +29,25 @@ export async function createAnimal(animal) {
     })
   );
 }
+
+export async function deleteAnimal(id) {
+  await docClient.send(
+    new DeleteCommand({
+      TableName: TABLE,
+      Key: { id },
+    })
+  );
+}
+
+export async function toggleAdopted(id, adopted) {
+  await docClient.send(
+    new UpdateCommand({
+      TableName: TABLE,
+      Key: { id },
+      UpdateExpression: "set adopted = :adopted",
+      ExpressionAttributeValues: {
+        ":adopted": adopted,
+      },
+    })
+  );
+}
