@@ -4,13 +4,16 @@ import AnimalModal from "./components/AnimalModal";
 import { Button } from "react-bootstrap";
 import Animals from "./components/Animals";
 import { useEffect } from "react";
-import { createAnimal, deleteAnimal, scanAnimals } from "./api/animals";
-
-import { toggleAdopted, updateAnimalImage } from "./api/animals";
-import { useState } from "react";
+import {
+  createAnimal,
+  deleteAnimal,
+  scanAnimals,
+  toggleAdopted,
+  updateAnimalImage,
+} from "./dynamo";
 
 function App() {
-  const { form, setForm } = useState({
+  const [form, setForm] = useState({
     name: "",
     species: "",
     age: "",
@@ -19,8 +22,8 @@ function App() {
     imageUrl: "",
   });
 
-  const { animals, setAnimals } = useState([]);
-  const { show, setShow } = useState(false);
+  const [animals, setAnimals] = useState([]);
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
     scanAnimals().then(setAnimals);
@@ -36,14 +39,14 @@ function App() {
     });
   }
 
-  async function handleToggle(animal) {
-    await toggleAdopted(animal.id, !animal.adopted);
+  async function handleToggleAdopted(id, adopted) {
+    await toggleAdopted(id, adopted);
     setAnimals((prev) =>
-      prev.map((a) => (a.id === animal.id ? { ...a, adopted: !a.adopted } : a))
+      prev.map((a) => (a.id === id ? { ...a, adopted } : a))
     );
   }
 
-  async function deleteAnimal(id) {
+  async function handleDeleteAnimal(id) {
     await deleteAnimal(id);
     setAnimals((prev) => prev.filter((animal) => animal.id !== id));
   }
@@ -97,16 +100,16 @@ function App() {
         <Animals
           animals={adopted}
           title="these animals have found a home!"
-          deleteAnimal={deleteAnimal}
-          toggleAdopted={handleToggle}
+          deleteAnimal={handleDeleteAnimal}
+          toggleAdopted={handleToggleAdopted}
           onEditImage={handleEditImage}
           onChange={handleChange}
         />
         <Animals
           animals={available}
           title="Ready For Adoption!"
-          deleteAnimal={deleteAnimal}
-          toggleAdopted={handleToggle}
+          deleteAnimal={handleDeleteAnimal}
+          toggleAdopted={handleToggleAdopted}
           onEditImage={handleEditImage}
           onChange={handleChange}
         />

@@ -1,15 +1,17 @@
 import React from "react";
 import { ListGroup } from "react-bootstrap";
 import Image from "react-bootstrap/Image";
+import Button from "react-bootstrap/Button";
 
 export default function Animals({
   animals,
   title,
   deleteAnimal,
   toggleAdopted,
+  onEditImage,
+  noPets,
 }) {
-  // TODO add a check to see if animals is empty and return a message
-  if (animals.length == 0) return <h2>No Animals</h2>;
+  if (animals.length == 0) return <h2>{noPets}</h2>;
 
   return (
     <div>
@@ -49,11 +51,10 @@ export default function Animals({
               size="sm"
               className="me-2"
               variant="primary"
-              disabled={animal.adopted}
               onClick={() => toggleAdopted(animal.id, !animal.adopted)}
             >
-              {animal.adopted && "Make Available"}
               {!animal.adopted && "Adopt"}
+              {animal.adopted && "Make Available"}
             </Button>
             <Button
               variant="danger"

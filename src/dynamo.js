@@ -1,12 +1,18 @@
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import { DynamoDBDocumentClient, UpdateCommand } from "@aws-sdk/lib-dynamodb";
+import {
+  DynamoDBDocumentClient,
+  UpdateCommand,
+  PutCommand,
+  ScanCommand,
+  DeleteCommand,
+} from "@aws-sdk/lib-dynamodb";
 const TABLE = "animals";
 
 const client = new DynamoDBClient({
-  region: process.env.VITE_AWS_REGION || "us-east-1",
+  region: import.meta.env.VITE_AWS_REGION || "us-east-1",
   credentials: {
-    accessKeyId: process.env.VITE_AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.VITE_AWS_SECRET_KEY,
+    accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
+    secretAccessKey: import.meta.env.VITE_AWS_SECRET_KEY,
   },
 });
 
@@ -44,7 +50,7 @@ export async function updateAnimalImage(id, imageUrl) {
     new UpdateCommand({
       TableName: TABLE,
       Key: { id },
-      UpdateExpression: "set imageUrl = :imageUrl",
+      UpdateExpression: "set #imageUrl = :imageUrl",
       ExpressionAttributeNames: {
         "#imageUrl": "imageUrl",
       },
@@ -60,7 +66,7 @@ export async function toggleAdopted(id, adopted) {
     new UpdateCommand({
       TableName: TABLE,
       Key: { id },
-      UpdateExpression: "set adopted = :adopted",
+      UpdateExpression: "SET #adopted = :adopted",
       ExpressionAttributeNames: {
         "#adopted": "adopted",
       },
