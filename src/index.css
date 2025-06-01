@@ -1,1 +1,124 @@
+:root {
+    --neon-pink: #ff2d55;
+    --neon-blue: #00fff5;
+    --neon-purple: #b026ff;
+    --dark-bg: #0a0a0f;
+}
 
+body {
+    background-color: var(--dark-bg);
+    color: #fff;
+    font-family: 'Chakra Petch', sans-serif;
+}
+
+h1 {
+    text-align: center;
+    color: var(--neon-blue);
+    text-shadow: 0 0 10px var(--neon-blue);
+    margin: 2rem 0;
+    font-weight: 700;
+    font-size: 3rem;
+}
+
+.container {
+    padding: 2rem;
+}
+
+.cyberpunk-card {
+    background: rgba(10, 10, 15, 0.9);
+    border: 2px solid var(--neon-pink);
+    box-shadow: 0 0 15px var(--neon-pink);
+    transition: all 0.3s ease;
+}
+
+.cyberpunk-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 25px var(--neon-pink);
+}
+
+.btn-cyber {
+    background: transparent;
+    border: 2px solid var(--neon-blue);
+    color: var(--neon-blue);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: all 0.3s ease;
+}
+
+.btn-cyber:hover {
+    background: var(--neon-blue);
+    color: var(--dark-bg);
+    box-shadow: 0 0 15px var(--neon-blue);
+}
+
+.btn-cyber-danger {
+    border-color: var(--neon-pink);
+    color: var(--neon-pink);
+}
+
+.btn-cyber-danger:hover {
+    background: var(--neon-pink);
+    box-shadow: 0 0 15px var(--neon-pink);
+}
+.cyberpunk-modal .modal-content {
+    background-color: var(--dark-bg);
+    border: 2px solid var(--neon-blue);
+    box-shadow: 0 0 20px var(--neon-blue);
+}
+
+.border-neon {
+    border-color: var(--neon-blue);
+}
+
+.text-neon-blue {
+    color: var(--neon-blue);
+    text-shadow: 0 0 5px var(--neon-blue);
+}
+
+.text-neon-pink {
+    color: var(--neon-pink);
+    text-shadow: 0 0 5px var(--neon-pink);
+}
+
+.text-neon-purple {
+    color: var(--neon-purple);
+    text-shadow: 0 0 5px var(--neon-purple);
+}
+
+.cyber-input {
+    background-color: rgba(16, 16, 24, 0.8);
+    border: 1px solid var(--neon-blue);
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.cyber-input:focus {
+    box-shadow: 0 0 10px var(--neon-blue);
+    background-color: rgba(16, 16, 24, 0.9) ;
+}
+
+.cyber-checkbox {
+    color: white;
+}
+
+.cyber-checkbox .form-check-input {
+    background-color: rgba(16, 16, 24, 0.8);
+    border: 1px solid var(--neon-purple);
+}
+
+.cyber-checkbox .form-check-input:checked {
+    background-color: var(--neon-purple);
+    border-color: var(--neon-purple);
+    box-shadow: 0 0 10px var(--neon-purple);
+}
+
+.modal-header .btn-close {
+    color: var(--neon-pink);
+    text-shadow: 0 0 5px var(--neon-pink);
+    opacity: 0.8;
+}
+
+.modal-header .btn-close:hover {
+    opacity: 1;
+    text-shadow: 0 0 10px var(--neon-pink);
+}

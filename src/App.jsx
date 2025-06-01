@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./App.css";
+import "./index.css";
 import AnimalModal from "./components/AnimalModal";
 import { Button } from "react-bootstrap";
 import Animals from "./components/Animals";
@@ -86,7 +86,11 @@ function App() {
     <>
       <h1>Fur-Ever Friends Rescue</h1>
       <main className="container">
-        <Button variant="primary" onClick={() => setShow(true)}>
+        <Button
+          className="btn-cyber"
+          variant="primary"
+          onClick={() => setShow(true)}
+        >
           Add Animal
         </Button>
 
